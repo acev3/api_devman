@@ -29,12 +29,13 @@ def main():
                 new_attempts = response_json['new_attempts']
                 for attempt in new_attempts:
                     title = attempt['lesson_title']
-                    text = "Преподавателю все понравилось, можно приступать к следующему уроку!"
+                    text = """Преподавателю все понравилось,
+                    можно приступать к следующему уроку!"""
                     if attempt['is_negative']:
                         text = "К сожалению в работе нашлись ошибки."
                     bot.send_message(chat_id=chat_id,
-                                     text='У вас проверили работу "{}".\n\n{}'\
-                                     .format(title,text)
+                                     text='У вас проверили работу "{}".\n\n{}'
+                                     .format(title, text)
                                      )
         except requests.exceptions.ReadTimeout:
             pass
@@ -44,3 +45,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
