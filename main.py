@@ -28,7 +28,7 @@ def main():
                 for attempt in new_attempts:
                     title = attempt['lesson_title']
                     text = "Преподавателю все понравилось, можно приступать к следующему уроку!"
-                    if attempt['is_negative']==True:
+                    if attempt['is_negative']:
                         text = "К сожалению в работе нашлись ошибки."
                     bot.send_message(chat_id=chat_id,
                                      text='У вас проверили работу "{}".\n\n{}'\
