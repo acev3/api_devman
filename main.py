@@ -21,14 +21,12 @@ def main():
                                     params=payload, headers=headers
                                     )
             response.raise_for_status()
-            response_json = response.json()
-            if 'error' in response_json:
-                raise requests.exceptions.HTTPError(response_json['error'])
-            if response_json['status'] == 'timeout':
-                payload['timestamp'] = response_json['timestamp_to_request']
+            decoded_response = response.json()
+            if decoded_response['status'] == 'timeout':
+                payload['timestamp'] = decoded_response['timestamp_to_request']
             else:
-                payload['timestamp'] = response_json['last_attempt_timestamp']
-                new_attempts = response_json['new_attempts']
+                payload['timestamp'] = decoded_response['last_attempt_timestamp']
+                new_attempts = decoded_response['new_attempts']
                 for attempt in new_attempts:
                     title = attempt['lesson_title']
                     text = """Преподавателю все понравилось,
