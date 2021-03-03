@@ -22,6 +22,8 @@ def main():
                                     )
             response.raise_for_status()
             response_json = response.json()
+            if 'error' in response_json:
+                raise requests.exceptions.HTTPError(response_json['error'])
             if response_json['status'] == 'timeout':
                 payload['timestamp'] = response_json['timestamp_to_request']
             else:
