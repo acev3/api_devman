@@ -7,12 +7,12 @@ import os
 
 def main():
     load_dotenv()
-    DEVMAN_API_TOKEN = os.environ['DEVMAN_API_TOKEN']
+    devman_api_token = os.environ['DEVMAN_API_TOKEN']
     api_tme_token = os.environ['TELEGRAM_API_TOKEN']
     chat_id = os.environ['CHAT_ID']
     bot = telegram.Bot(token=api_tme_token)
     payload = {}
-    headers = {'Authorization': 'Token {}'.format(DEVMAN_API_TOKEN)}
+    headers = {'Authorization': 'Token {}'.format(devman_api_token)}
     while True:
         try:
             response = requests.get('https://dvmn.org/api/long_polling/',
