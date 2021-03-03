@@ -18,11 +18,13 @@ def main():
             response = requests.get('https://dvmn.org/api/long_polling/',
                                     params=payload, headers=headers
                                     )
-            if response.json()['status'] == 'timeout':
-                payload['timestamp'] = response.json()['timestamp_to_request']
+            response.raise_for_status()
+            response_json = response.json()
+            if response_json['status'] == 'timeout':
+                payload['timestamp'] = response_json['timestamp_to_request']
             else:
-                payload['timestamp'] = response.json()['last_attempt_timestamp']
-                new_attempts = response.json()['new_attempts']
+                payload['timestamp'] = response_json['last_attempt_timestamp']
+                new_attempts = response_json['new_attempts']
                 for attempt in new_attempts:
                     title = attempt['lesson_title']
                     text = "Преподавателю все понравилось, можно приступать к следующему уроку!"
