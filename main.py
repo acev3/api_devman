@@ -3,6 +3,7 @@ from requests.exceptions import ConnectionError
 import telegram
 from dotenv import load_dotenv
 import os
+import time
 
 
 def main():
@@ -10,6 +11,7 @@ def main():
     devman_api_token = os.environ['DEVMAN_API_TOKEN']
     api_tme_token = os.environ['TELEGRAM_API_TOKEN']
     chat_id = os.environ['CHAT_ID']
+    time_for_sleep = 60
     bot = telegram.Bot(token=api_tme_token)
     payload = {}
     headers = {'Authorization': 'Token {}'.format(devman_api_token)}
@@ -37,7 +39,7 @@ def main():
         except requests.exceptions.ReadTimeout:
             pass
         except ConnectionError:
-            pass
+            time.sleep(time_for_sleep)
 
 
 if __name__ == '__main__':
