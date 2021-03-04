@@ -23,6 +23,9 @@ devman_token - в [api devman](https://dvmn.org/api/docs/)
 ```sh
 python main.py
 ```
+
+## Деплой в heroku
+Для того, чтобы задеплоить приложение на [heroku](https://devcenter.heroku.com/articles/getting-started-with-python), ознакомьтесь с документацией.
 ### Цель проекта
 Код написан в образовательных целях на курсе для веб-разработчиков [dvmn.org](https://dvmn.org/modules/).
 
