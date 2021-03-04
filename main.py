@@ -7,16 +7,27 @@ import time
 import logging
 
 
+class MyLogsHandler(logging.Handler):
+    def __init__(self, bot, chat_id):
+        self.bot = bot
+        self.chat_id = chat_id
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.bot.send_message(chat_id=self.chat_id, text=str(log_entry))
+
+
 def main():
     load_dotenv()
     devman_api_token = os.environ['DEVMAN_API_TOKEN']
     api_tme_token = os.environ['TELEGRAM_API_TOKEN']
     chat_id = os.environ['CHAT_ID']
-    logging.warning('Бот запущен')
     bot = telegram.Bot(token=api_tme_token)
-    bot.send_message(chat_id=chat_id,
-                     text=logging.warning('Бот запущен')
-                     )
+    MyLogsHandler(bot, chat_id)
+    logger = logging.getLogger("BotLogger")
+    logger.setLevel(logging.INFO)
+    logger.addHandler(MyLogsHandler())
+    logger.info('Бот запущен')
     time_for_sleep = 60
     payload = {}
     headers = {'Authorization': 'Token {}'.format(devman_api_token)}
