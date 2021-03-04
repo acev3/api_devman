@@ -4,6 +4,7 @@ import telegram
 from dotenv import load_dotenv
 import os
 import time
+import logging
 
 
 def main():
@@ -11,8 +12,12 @@ def main():
     devman_api_token = os.environ['DEVMAN_API_TOKEN']
     api_tme_token = os.environ['TELEGRAM_API_TOKEN']
     chat_id = os.environ['CHAT_ID']
-    time_for_sleep = 60
+    logging.warning('Бот запущен')
     bot = telegram.Bot(token=api_tme_token)
+    bot.send_message(chat_id=chat_id,
+                     text=logging.warning('Бот запущен')
+                     )
+    time_for_sleep = 60
     payload = {}
     headers = {'Authorization': 'Token {}'.format(devman_api_token)}
     while True:
