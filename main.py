@@ -53,8 +53,8 @@ def main():
                                      text='У вас проверили работу "{}".\n\n{}'
                                      .format(title, text)
                                      )
-        except requests.exceptions.ReadTimeout:
-            pass
+        except requests.exceptions.ReadTimeout as err:
+            logging.error(err, exc_info=True)
         except ConnectionError:
             time.sleep(time_for_sleep)
 
