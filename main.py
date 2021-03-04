@@ -54,7 +54,7 @@ def main():
                                      .format(title, text)
                                      )
         except requests.exceptions.ReadTimeout as err:
-            logging.error(err, exc_info=True)
+            logger.error(err, exc_info=True)
         except ConnectionError:
             time.sleep(time_for_sleep)
 
