@@ -23,10 +23,9 @@ def main():
     api_tme_token = os.environ['TELEGRAM_API_TOKEN']
     chat_id = os.environ['CHAT_ID']
     bot = telegram.Bot(token=api_tme_token)
-    MyLogsHandler(bot, chat_id)
     logger = logging.getLogger("BotLogger")
     logger.setLevel(logging.INFO)
-    logger.addHandler(MyLogsHandler())
+    logger.addHandler(MyLogsHandler(bot, chat_id))
     logger.info('Бот запущен')
     time_for_sleep = 60
     payload = {}
