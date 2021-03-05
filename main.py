@@ -7,6 +7,9 @@ import time
 import logging
 
 
+logger = logging.getLogger("BotLogger")
+
+
 class MyLogsHandler(logging.Handler):
     def __init__(self, bot, chat_id):
         super().__init__()
@@ -24,9 +27,7 @@ def main():
     api_tme_token = os.environ['TELEGRAM_API_TOKEN']
     chat_id = os.environ['CHAT_ID']
     bot = telegram.Bot(token=api_tme_token)
-    logger = logging.getLogger("BotLogger")
-    logger.setLevel(logging.INFO)
-    logger.addHandler(MyLogsHandler(bot, chat_id))
+    logger = setup_bot_logger(api_tme_token, chat_id)
     logger.info('Бот запущен')
     time_for_sleep = 60
     payload = {}
@@ -57,6 +58,13 @@ def main():
             logger.error(err, exc_info=True)
         except ConnectionError:
             time.sleep(time_for_sleep)
+
+
+def setup_bot_logger(api_tme_token, chat_id):
+    bot = telegram.Bot(token=api_tme_token)
+    logger.addHandler(MyLogsHandler(bot, chat_id))
+    logger.setLevel(logging.INFO)
+    return logger
 
 
 if __name__ == '__main__':
