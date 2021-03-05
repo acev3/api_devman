@@ -21,13 +21,7 @@ class MyLogsHandler(logging.Handler):
         self.bot.send_message(chat_id=self.chat_id, text=str(log_entry))
 
 
-def main():
-    load_dotenv()
-    devman_api_token = os.environ['DEVMAN_API_TOKEN']
-    api_tme_token = os.environ['TELEGRAM_API_TOKEN']
-    chat_id = os.environ['CHAT_ID']
-    bot = telegram.Bot(token=api_tme_token)
-    logger = setup_bot_logger(api_tme_token, chat_id)
+def bot_worker(bot, devman_api_token, chat_id):
     logger.info('Бот запущен')
     time_for_sleep = 60
     payload = {}
@@ -47,7 +41,7 @@ def main():
                 for attempt in new_attempts:
                     title = attempt['lesson_title']
                     text = """Преподавателю все понравилось,
-                    можно приступать к следующему уроку!"""
+                        можно приступать к следующему уроку!"""
                     if attempt['is_negative']:
                         text = "К сожалению в работе нашлись ошибки."
                     bot.send_message(chat_id=chat_id,
@@ -60,11 +54,16 @@ def main():
             time.sleep(time_for_sleep)
 
 
-def setup_bot_logger(api_tme_token, chat_id):
+
+def main():
+    load_dotenv()
+    devman_api_token = os.environ['DEVMAN_API_TOKEN']
+    api_tme_token = os.environ['TELEGRAM_API_TOKEN']
+    chat_id = os.environ['CHAT_ID']
     bot = telegram.Bot(token=api_tme_token)
     logger.addHandler(MyLogsHandler(bot, chat_id))
     logger.setLevel(logging.INFO)
-    return logger
+    bot_worker(bot, devman_api_token, chat_id)
 
 
 if __name__ == '__main__':
