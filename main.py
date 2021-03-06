@@ -48,7 +48,7 @@ def bot_worker(bot, devman_api_token, chat_id):
                                      text='У вас проверили работу "{}".\n\n{}'
                                      .format(title, text)
                                      )
-        except requests.exceptions.ReadTimeout as err:
+        except requests.exceptions.ReadTimeout:
             pass
         except requests.exceptions.RequestException as err:
             logger.error(err, exc_info=True)
